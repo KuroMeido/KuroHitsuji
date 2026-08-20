@@ -1,0 +1,166 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<TargetFramework>net8.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<PlatformTarget>x64</PlatformTarget>
+		<ImplicitUsings>true</ImplicitUsings>
+		<PublishAddinFiles>true</PublishAddinFiles>
+		<Configurations>Debug;Release;R2019;R2020;R2021;R2022;R2023;R2024;R2025;R2026;R2026</Configurations>
+		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="$(Configuration.Contains('R2019'))">
+		<RevitVersion>2019</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2020'))">
+		<RevitVersion>2020</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2021'))">
+		<RevitVersion>2021</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2022'))">
+		<RevitVersion>2022</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2023'))">
+		<RevitVersion>2023</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2024'))">
+		<RevitVersion>2024</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R2025'))">
+		<RevitVersion>2025</RevitVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R2026'))">
+		<RevitVersion>2026</RevitVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R20'))">
+		<Optimize>True</Optimize>
+		<DefineConstants>$(DefineConstants);$(Configuration.Split('|')[0])</DefineConstants>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<Reference Include="office">
+			<HintPath>C:\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\OFFICE.DLL</HintPath>
+		</Reference>
+
+		<Reference Include="Autodesk.IFC.Export.UI">
+			<HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\AddIns\IFCExporterUI\Autodesk.IFC.Export.UI.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+
+		<Reference Include="Revit.IFC.Common">
+			<HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.IFC.Common.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+
+		<Reference Include="RevitAPI">
+			<HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\RevitAPI.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+
+		<Reference Include="RevitAPIUI">
+			<HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\RevitAPIUI.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+
+		<Reference Include="AdWindows">
+			<HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\AdWindows.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.102.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="EPPlus" Version="8.6.1" />
+		<PackageReference Include="ExcelDataReader" Version="3.8.0" />
+		<PackageReference Include="ExcelDataReader.DataSet" Version="3.8.0" />
+		<PackageReference Include="Microsoft-WindowsAPICodePack-Core" Version="1.1.5" />
+		<PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
+		<PackageReference Include="MiniExcel" Version="1.44.1" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+		<PackageReference Include="System.IO.Packaging" Version="10.0.9" />
+		<PackageReference Include="System.Management" Version="10.0.9" />
+		<PackageReference Include="System.Text.Json" Version="8.0.5" />
+		<!-- Used by Model Issue (Command\MainCommand\ModelIssue) to serialize issue metadata + base64
+         image bytes into the JSON blob stored via Extensible Storage. net8.0-windows (R2025/R2026)
+         already ships System.Text.Json, but the net48 targets (R2019-R2024) need this package. -->
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<PackageReference Include="Costura.Fody" Version="6.2.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
+		<PackageReference Include="XLParser" Version="1.7.5" />
+
+
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\Images\*.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="PresentationWPF\ViewModels\Projects_pySupport\**" />
+	  <EmbeddedResource Remove="PresentationWPF\ViewModels\Projects_pySupport\**" />
+	  <None Remove="PresentationWPF\ViewModels\Projects_pySupport\**" />
+	  <Page Remove="PresentationWPF\ViewModels\Projects_pySupport\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Event\" />
+	  <Folder Include="Resources\" />
+	</ItemGroup>
+
+</Project>
