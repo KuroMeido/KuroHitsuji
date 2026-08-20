@@ -54,8 +54,8 @@ The project also references Revit API assemblies from the local Revit installati
 1. Open the solution in Visual Studio.
 2. Select the configuration for the Revit version you want to build.
 3. Build the add-in.
-4. Load the resulting add-in into Revit.
+4. Load the resulting add-in into Revit by Add-in Manager.
 
 ## License
 
-Add a license here if you want to publish this project publicly.
+
